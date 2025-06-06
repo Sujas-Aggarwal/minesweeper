@@ -14,7 +14,6 @@ const COLORS = [
 
 // PATHS
 const FLAG_PATH = "/assets/flag.svg";
-const BOMB_PATH = "/assets/bomb.svg";
 const POP_PATH = "/assets/pop.wav";
 const OVER_PATH = "/assets/over.wav";
 
@@ -33,4 +32,10 @@ function PLAY_OVER(){
 // re-render for small screen sizes
 if (window.innerWidth < 600) {
   CANVAS_SIZE = 300;
+}
+
+// DARK MODE TOGGLER
+const dmt = document.getElementById("dark-mode-toggler");
+dmt.onclick = () =>{
+    document.body.classList.toggle("dark")
 }

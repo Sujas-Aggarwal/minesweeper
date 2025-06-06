@@ -47,7 +47,8 @@ Array.from(dabas).map((dabba) => {
 async function gameOver() {
     PLAY_OVER();
     canvas.style.pointerEvents = "none";
-    // await new Promise((resolve)=>setTimeout(resolve,4000));
+    await new Promise((resolve)=>setTimeout(resolve,4000));
+    canvas.style.pointerEvents = "auto";
     const TEXT = document.createElement("h1");
     TEXT.innerText = "GAME OVER!";
     TEXT.style.fontFamily = "Minesweeper";
@@ -55,7 +56,23 @@ async function gameOver() {
     TEXT.style.color = "white";
     canvas.innerHTML = "";
     canvas.appendChild(TEXT);
-}
+    // Adding Retry Button
+    const retryBtn = document.createElement("a");
+    retryBtn.innerText = "Retry";
+    retryBtn.onclick = () =>{
+        location.reload();
+    }
+    retryBtn.style = `
+    font-family: 'Minesweeper';
+    font-size: 10px;
+    cursor: pointer;
+    background: none;
+    outline: none;
+    border: none;
+    text-align: center;
+    color:var(--text)`;
+    canvas.append(retryBtn);
+}   
 
 function onDabbaLeftClick(dabba) {
   // I am loving how type unsafe everything is
@@ -82,10 +99,11 @@ function onDabbaLeftClick(dabba) {
   }
   // IF BOMB
   if (val==-1){
-    //add bomb image there
-    const bomb = document.createElement("img");
-    bomb.src = BOMB_PATH;
-    bomb.width = CANVAS_SIZE/SIZE - 10;
+    const bomb = document.createElement("div");
+    bomb.style.width = "50%";
+    bomb.style.height = "50%";
+    bomb.style.borderRadius = "100%";
+    bomb.style.background = "var(--text)";
     dabba.appendChild(bomb);
     dabba.className+=" bombed";
     gameOver();

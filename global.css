@@ -6,6 +6,16 @@
 :root{
     --orange : #ff8b4c;
     --light-orange : #ffeade;
+    --text : black;
+    --grey1 : rgb(241, 241, 241);
+    --grey2 :rgb(221, 221, 221)
+}
+.dark{
+    --light-orange:#472914;
+    --orange : #9e5a2c;
+    --text : white;
+    --grey1 : rgb(37, 37, 37);
+    --grey2 : rgb(58, 58, 58);
 }
 
 ::selection{

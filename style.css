@@ -11,6 +11,16 @@ body{
     height: 100vh;
 }
 
+#dark-mode-toggler{
+    font-family: 'Minesweeper';
+    font-size: 10px;
+    cursor: pointer;
+    background: none;
+    outline: none;
+    border: none;
+    color:inherit;
+}
+
 #gradient-orange{
     --radius : 100vw;
     width: var(--radius);
@@ -34,6 +44,7 @@ body{
     align-items: center;
     gap: 0;
     font-family: Minesweeper;
+    color: var(--text)
 }
 
 #upper-title > h2 {
@@ -86,14 +97,14 @@ body{
 }
 .dabba.inactive{
     cursor: default;
-    background: rgb(221, 221, 221) !important;
+    background: var(--grey2) !important;
 }
 .dabba.inactive.alternate{
-    background: rgb(241, 241, 241) !important;
+    background: var(--grey1) !important;
 }
 .dabba.inactive:hover{
     filter:brightness(1)
 }
 .dabba.bombed{
-    background: rgb(255, 166, 166) !important;
+    background: rgb(160, 5, 5) !important;
 }
