@@ -1,0 +1,14 @@
+@font-face {
+    font-family: Minesweeper;
+    src: url("./assets/font/mine-sweeper.otf");
+}
+
+:root{
+    --orange : #ff5900;
+    --light-orange : #ffeade;
+}
+
+::selection{
+    color: var(--orange);
+    background: white;
+}

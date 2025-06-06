@@ -1,0 +1,37 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--light-orange);
+    width: 100vw;
+    overflow-x: hidden;
+}
+
+#gradient-orange{
+    --radius : 100vw;
+    width: var(--radius);
+    height: var(--radius);
+    position: fixed;
+    top: 0;
+    right: 0;
+    transform: translate(50%,-50%);
+    background: radial-gradient(var(--orange) 0%, transparent);
+    border-radius: var(--radius);
+    filter: blur(80px);
+}
+
+#upper-title{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+    font-family: Minesweeper;
+}
+
+#upper-title > h2 {
+    padding: 0;
+    margin-bottom: 0;
+}
+
+#upper-title > p {
+    font-size: 10px;
+}
