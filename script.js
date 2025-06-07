@@ -5,7 +5,19 @@ canvas.style.height = `${CANVAS_SIZE}px`;
 
 // GAME BOARD JS SETUP
 let bombs = new Map();
-bombs.set("1,2", true);
+
+// RANDOM BOMB GENERATION
+// BOMB TO NO BOMB RATIO IS 1/4 (25% BOXES ARE BOMBS)
+// SO LETS MAKE BOMBS USING PROBABILITY
+for (let i = 0; i < SIZE; i++){
+  for (let j = 0; j< SIZE; j++){
+    let newRandom = Math.random();
+    if (newRandom<0.25){ // lets place a bomb
+      bombs.set(`${i},${j}`,true);
+    }
+    // ELSE NO BOMBS
+  }
+}
 
 // GAME BOARD HTML SETUP
 {
@@ -18,7 +30,7 @@ bombs.set("1,2", true);
     for (let j = 0; j < SIZE; j++) {
       // create a dabba for each row
       const dabba = document.createElement("div");
-      dabba.className = `dabba ${(i + j) % 2 == 0 ? "alternate" : ""}`;
+      dabba.className = `dabba ${(i + j) % 2 == 0 ? "alternate" : ""} dabba-(${i},${j})`;
       dabba.setAttribute("data-row", i);
       dabba.setAttribute("data-col", j);
       row.appendChild(dabba);
@@ -43,10 +55,35 @@ Array.from(dabas).map((dabba) => {
   };
 });
 
+function dabbaValue(row,col){
+  let val = 0;
+  for (let i = -1; i <= 1; i++) {
+    for (let j = -1; j <= 1; j++) {
+      if (bombs.has(`${row + i},${col + j}`)) {
+        val++;
+        if (i == 0 && j == 0) { // THIS IS BOMB
+          return -1;
+        }
+      }
+    }
+  }
+  return val;
+}
+
+async function revealAllBombs(){
+  for (let i of bombs){
+    const dabba = document.getElementsByClassName(`dabba-(${i[0]})`)[0];
+    if ( dabba.classList.contains("bombed")) continue;
+    await new Promise((resolve)=>setTimeout(resolve,50));
+    onDabbaLeftClick(dabba,sound = false);
+  }
+}
+
 // FUNCTIONS
 async function gameOver() {
     PLAY_OVER();
     canvas.style.pointerEvents = "none";
+    await revealAllBombs();
     await new Promise((resolve)=>setTimeout(resolve,4000));
     canvas.style.pointerEvents = "auto";
     const TEXT = document.createElement("h1");
@@ -74,9 +111,10 @@ async function gameOver() {
     canvas.append(retryBtn);
 }   
 
-function onDabbaLeftClick(dabba) {
+function onDabbaLeftClick(dabba , sound = true) {
   // I am loving how type unsafe everything is
   // We need to reveal the content of dabba
+  if (!dabba || dabba.classList.contains("inactive") || dabba.classList.contains("bombed")) return;
   dabba.className += " inactive";
   // retrieve data class and row
   const row = parseInt(dabba.getAttribute("data-row"));
@@ -85,18 +123,8 @@ function onDabbaLeftClick(dabba) {
   // 1 means we got nothing to lose baby
   // just calculate, how many bombs we got near it
   // we just need to check 8 boxes around it, easy!
-  let val = 0;
-  for (let i = -1; i <= 1; i++) {
-    for (let j = -1; j <= 1; j++) {
-      if (bombs.has(`${row + i},${col + j}`)) {
-        val++;
-        if (i == 0 && j == 0) {
-          val = -1;
-          break;
-        }
-      }
-    }
-  }
+  
+  const val = dabbaValue(row,col);
   // IF BOMB
   if (val==-1){
     const bomb = document.createElement("div");
@@ -110,7 +138,10 @@ function onDabbaLeftClick(dabba) {
     return;
   }
   // PLAY SOUND
-  PLAY_POP();
+  if (sound){
+    PLAY_POP();
+  }
+  if (val==0) return;
   dabba.style.color = COLORS[val];
   dabba.innerText = val;
 }
@@ -124,7 +155,6 @@ function onDabbaRightClick(dabba) {
     const flag = document.createElement("img");
     flag.src = FLAG_PATH;
     flag.width = CANVAS_SIZE/SIZE - 10;
-    console.log(flag)
     dabba.appendChild(flag);
   }
 }
