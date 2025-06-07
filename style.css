@@ -1,98 +1,177 @@
-#dark-mode-toggler{
-    font-family: 'Minesweeper';
-    font-size: 10px;
-    cursor: pointer;
-    background: none;
-    outline: none;
-    border: none;
-    color:inherit;
+#dark-mode-toggler {
+  font-family: "Minesweeper";
+  font-size: 10px;
+  cursor: pointer;
+  background: none;
+  outline: none;
+  border: none;
+  color: inherit;
 }
 
-#gradient-orange{
-    --radius : 100vw;
-    width: var(--radius);
-    height: var(--radius);
-    position: fixed;
-    top: 0;
-    right: 0;
-    transform: translate(50%,-50%);
-    background: radial-gradient(var(--orange) 0%, transparent);
-    border-radius: var(--radius);
-    filter: blur(80px);
-    z-index:1;
-    pointer-events: none;
-
+#gradient-orange {
+  --radius: 100vw;
+  width: var(--radius);
+  height: var(--radius);
+  position: fixed;
+  top: 0;
+  right: 0;
+  transform: translate(50%, -50%);
+  background: radial-gradient(var(--orange) 0%, transparent);
+  border-radius: var(--radius);
+  filter: blur(80px);
+  z-index: 1;
+  pointer-events: none;
 }
 
-#upper-title{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 0;
-    font-family: Minesweeper;
-    color: var(--text)
+#upper-title {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+  font-family: Minesweeper;
+  color: var(--text);
 }
 
 #upper-title > h2 {
-    padding: 0;
-    margin: 0;
+  padding: 0;
+  margin: 0;
 }
 
 #upper-title > p {
-    font-size: 10px;
+  font-size: 10px;
 }
 
-#game-canvas{
-    background: var(--orange);
-    z-index: 2;
-    position: relative;
-    outline: 10px solid var(--orange);
-    border: 4px solid  var(--light-orange);
-    display: flex;
-    flex-direction: column;
-    box-shadow: 20px 20px rgb(100, 46, 13);
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    flex-direction: column;
+#game-canvas {
+  background: var(--orange);
+  z-index: 2;
+  position: relative;
+  outline: 10px solid var(--orange);
+  border: 4px solid var(--light-orange);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 20px 20px rgb(100, 46, 13);
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
 }
 
 /* STYLING FOR DABBAS */
 
-.dabba{
-    /* cursor: url("/assets/pickaxe.svg") 12 12 auto; */
+.dabba {
+  /* cursor: url("/assets/pickaxe.svg") 12 12 auto; */
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  flex: 1;
+  background: var(--orange);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  font-family: Minesweeper;
+  user-select: none;
+}
+.dabba.alternate {
+  background: var(--light-orange);
+}
+.dabba:hover {
+  filter: brightness(0.95);
+}
+.dabba.alternate:hover {
+  filter: brightness(1.05);
+}
+.dabba.inactive {
+  cursor: default;
+  background: var(--grey2) !important;
+}
+.dabba.inactive.alternate {
+  background: var(--grey1) !important;
+}
+.dabba.inactive:hover {
+  filter: brightness(1);
+}
+.dabba.bombed {
+  background: rgb(160, 5, 5) !important;
+}
+
+/* Start of V2 */
+/* CODE EDITOR GRAPHICS */
+#main-content {
+  gap: 40px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-wrap: wrap;
+}
+
+#code-editor {
+  z-index: 2;
+  width: 450px;
+  height: 420px;
+  background: var(--orange);
+  border-radius: 10px;
+  overflow-x: hidden;
+  position: relative;
+  padding-top: 30px;
+}
+#code-editor-nav {
+  background: #000;
+  width: 100%;
+  height: 30px;
+  display: flex;
+  font-family: "Minesweeper";
+  font-size: 8px;
+  align-content: center;
+  overflow: hidden;
+  user-select: none;
+  position: absolute;
+  top:0;
+  left: 0;
+}
+#code-editor-nav div {
+  height: 100%;
+  background: var(--orange);
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  color: var(--text);
+  padding: 10px;
+  border-right: 1px black solid;
+  cursor: pointer;
+  box-shadow: 0px 0px 40px black;
+}
+#mine-solver {
+  z-index: 5;
+}
+#mine-generator {
+  z-index: 0;
+}
+#info {
+  margin-left: auto;
+  border-right: none !important;
+}
+
+#code-editor-box {
+  width: 100%;
+  height: 390px;
+  padding: 0px 15px;
+  font-family: monospace;
+  color: var(--text);
+  line-height: 1.4;
+}
+#code-editor-box:focus {
+  outline: none;
+  border: none;
+}
+
+#execute-button{
+    background: greenyellow;
+    font-family: 'Minesweeper';
+    padding: 5px 10px;
     cursor: pointer;
-    padding: 0;
-    margin: 0;
-    flex: 1;
-    background: var(--orange);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 14px;
-    font-family: Minesweeper;
-    user-select: none;
-}
-.dabba.alternate{
-    background: var(--light-orange);
-}
-.dabba:hover{
-    filter: brightness(0.95);
-}
-.dabba.alternate:hover{
-    filter: brightness(1.05);
-}
-.dabba.inactive{
-    cursor: default;
-    background: var(--grey2) !important;
-}
-.dabba.inactive.alternate{
-    background: var(--grey1) !important;
-}
-.dabba.inactive:hover{
-    filter:brightness(1)
-}
-.dabba.bombed{
-    background: rgb(160, 5, 5) !important;
+    font-size: 10px;
+    float: right;
+    margin-right: 5px;
 }

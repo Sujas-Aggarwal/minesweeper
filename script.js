@@ -9,16 +9,20 @@ let bombs = new Map();
 // RANDOM BOMB GENERATION
 // BOMB TO NO BOMB RATIO IS 1/5 (20% BOXES ARE BOMBS)
 // SO LETS MAKE BOMBS USING PROBABILITY
-for (let i = 0; i < SIZE; i++) {
-  for (let j = 0; j < SIZE; j++) {
-    let newRandom = Math.random();
-    if (newRandom < 0.20) {
-      // lets place a bomb
-      bombs.set(`${i},${j}`, true);
+function generateBombs() {
+  bombs.clear();
+  console.log("Generating Bombs");
+  for (let i = 0; i < SIZE; i++) {
+    for (let j = 0; j < SIZE; j++) {
+      if (customBombGenerator(i,j)) {
+        console.log("Setting " , i,",",j," as Bomb");
+        bombs.set(`${i},${j}`, true);
+      }
+      // ELSE NO BOMBS
     }
-    // ELSE NO BOMBS
   }
 }
+generateBombs();
 
 // GAME BOARD HTML SETUP
 {
@@ -88,7 +92,7 @@ async function gameOver() {
   PLAY_OVER();
   canvas.style.pointerEvents = "none";
   await revealAllBombs();
-  await new Promise((resolve)=>setTimeout(resolve,2000));
+  await new Promise((resolve) => setTimeout(resolve, 2000));
   canvas.style.pointerEvents = "auto";
   const TEXT = document.createElement("h1");
   TEXT.innerText = "GAME OVER!";
@@ -103,9 +107,9 @@ async function gameOver() {
   retryBtn.onclick = () => {
     location.reload();
   };
-  document.addEventListener("keydown",()=>{
+  document.addEventListener("keydown", () => {
     location.reload();
-  })
+  });
   retryBtn.style = `
     font-family: 'Minesweeper';
     font-size: 10px;
@@ -116,8 +120,8 @@ async function gameOver() {
     text-align: center;
     color:var(--text)`;
   canvas.append(retryBtn);
-  const p  =document.createElement("p");
-  p.innerText = "[Press Any Key to Restart]"
+  const p = document.createElement("p");
+  p.innerText = "[Press Any Key to Restart]";
   p.style = `
     font-family: 'Courier New', Courier, monospace;
     font-size: 12px;
@@ -152,7 +156,7 @@ function onDabbaLeftClick(dabba, sound = true) {
     bomb.style.height = "50%";
     bomb.style.borderRadius = "100%";
     bomb.style.background = "var(--text)";
-    dabba.innerHTML= "";
+    dabba.innerHTML = "";
     dabba.appendChild(bomb);
     dabba.className += " bombed";
     gameOver();

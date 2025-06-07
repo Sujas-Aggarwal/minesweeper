@@ -27,11 +27,11 @@ body{
     font-family: Arial, Helvetica, sans-serif;
     background: var(--light-orange);
     width: 100vw;
-    overflow: hidden;
+    overflow-x: hidden;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    gap: 20px;
+    padding: 20px 0px 0px 0px;
+    gap: 30px;
     height: 100vh;
 }

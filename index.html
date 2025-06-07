@@ -4,30 +4,41 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="global.css" />
-    <link rel="stylesheet" href="favicon.ico">
+    <link rel="stylesheet" href="favicon.ico" />
     <link rel="stylesheet" href="style.css" />
     <title>Minesweeper</title>
   </head>
   <body class="dark">
     <!-- Gradient Blur Orange -->
-     <div id="gradient-orange">
-
-     </div>
-     <!-- Upper Title Section -->
-     <div id="upper-title">
-         <h2>Minesweeper</h2>
-         <p>Made with ❤️ by Sujas Aggarwal</p>
-         <button id="dark-mode-toggler">Change Theme</button>
+    <div id="gradient-orange"></div>
+    <!-- Upper Title Section -->
+    <div id="upper-title">
+      <h2>Minesweeper</h2>
+      <p>Made with ❤️ by Sujas Aggarwal</p>
+      <button id="dark-mode-toggler">Change Theme</button>
     </div>
     <!-- Main Game Section -->
-    <div>
-        <!-- Main Game Canvas Here -->
-        <div id="game-canvas">
+    <div id="main-content">
+      <!-- Main Game Canvas Here -->
+      <div id="game-canvas"></div>
+      <!-- This is Conditional Section where Editor will emerge -->
+      <div id="code-editor">
+        <div id="code-editor-nav">
+          <div id="mine-solver">
+            Mine Solver
+          </div>
+          <div id="mine-generator">
+            Mine Generator
+          </div>
+        </div>
+        <div id="code-editor-box" contenteditable="true">
 
         </div>
-        <!-- This is Conditional Section where Editor will emerge -->
+        <button id="execute-button">Execute</button>
+      </div>
     </div>
     <script src="setup.js"></script>
+    <script src="advanced.js"></script>
     <script src="script.js"></script>
   </body>
 </html>
