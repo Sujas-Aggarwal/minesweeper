@@ -88,6 +88,7 @@ async function gameOver() {
   PLAY_OVER();
   canvas.style.pointerEvents = "none";
   await revealAllBombs();
+  await new Promise((resolve)=>setTimeout(resolve,2000));
   canvas.style.pointerEvents = "auto";
   const TEXT = document.createElement("h1");
   TEXT.innerText = "GAME OVER!";
@@ -102,6 +103,9 @@ async function gameOver() {
   retryBtn.onclick = () => {
     location.reload();
   };
+  document.addEventListener("keydown",()=>{
+    location.reload();
+  })
   retryBtn.style = `
     font-family: 'Minesweeper';
     font-size: 10px;
@@ -112,6 +116,14 @@ async function gameOver() {
     text-align: center;
     color:var(--text)`;
   canvas.append(retryBtn);
+  const p  =document.createElement("p");
+  p.innerText = "[Press Any Key to Restart]"
+  p.style = `
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 12px;
+    text-align: center;
+    color:var(--text)`;
+  canvas.append(p);
 }
 
 function onDabbaLeftClick(dabba, sound = true) {
