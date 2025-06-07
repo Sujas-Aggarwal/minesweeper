@@ -1,4 +1,4 @@
-#dark-mode-toggler {
+#dark-mode-toggler, #advanced-mode {
   font-family: "Minesweeper";
   font-size: 10px;
   cursor: pointer;
@@ -38,8 +38,11 @@
   margin: 0;
 }
 
-#upper-title > p {
-  font-size: 10px;
+#upper-title > a {
+  font-size: 8px;
+  padding: 5px;
+  text-decoration: none;
+  color:inherit
 }
 
 #game-canvas {

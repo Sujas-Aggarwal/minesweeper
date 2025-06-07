@@ -14,18 +14,19 @@ function generateBombs() {
   console.log("Generating Bombs");
   for (let i = 0; i < SIZE; i++) {
     for (let j = 0; j < SIZE; j++) {
-      if (customBombGenerator(i,j)) {
-        console.log("Setting " , i,",",j," as Bomb");
+      if (customBombGenerator(i, j)) {
+        console.log("Setting ", i, ",", j, " as Bomb");
         bombs.set(`${i},${j}`, true);
       }
       // ELSE NO BOMBS
     }
   }
+  createBoard();
 }
-generateBombs();
 
 // GAME BOARD HTML SETUP
-{
+function createBoard() {
+  canvas.innerHTML = "";
   const fragment = document.createDocumentFragment();
   for (let i = 0; i < SIZE; i++) {
     // For Every Row, add a div
@@ -45,23 +46,24 @@ generateBombs();
     fragment.appendChild(row);
   }
   canvas.append(fragment);
+  const dabas = document.querySelectorAll(".dabba");
+  Array.from(dabas).map((dabba) => {
+    // Implementing JS for all dabas
+    dabba.onclick = () => {
+      if (dabba.classList.contains("inactive")) return;
+      if (dabba.classList.contains("flagged")) return;
+      onDabbaLeftClick(dabba);
+    };
+    dabba.oncontextmenu = (e) => {
+      e.preventDefault();
+      if (dabba.classList.contains("inactive")) return;
+      onDabbaRightClick(dabba);
+    };
+  });
 }
+generateBombs();
 
-const dabas = document.querySelectorAll(".dabba");
-Array.from(dabas).map((dabba) => {
-  // Implementing JS for all dabas
-  dabba.onclick = () => {
-    if (dabba.classList.contains("inactive")) return;
-    if (dabba.classList.contains("flagged")) return;
-    onDabbaLeftClick(dabba);
-  };
-  dabba.oncontextmenu = (e) => {
-    e.preventDefault();
-    if (dabba.classList.contains("inactive")) return;
-    onDabbaRightClick(dabba);
-  };
-});
-
+createBoard();
 function dabbaValue(row, col) {
   let val = 0;
   for (let i = -1; i <= 1; i++) {
@@ -105,10 +107,10 @@ async function gameOver() {
   const retryBtn = document.createElement("a");
   retryBtn.innerText = "Retry";
   retryBtn.onclick = () => {
-    location.reload();
+    createBoard();
   };
   document.addEventListener("keydown", () => {
-    location.reload();
+    createBoard();
   });
   retryBtn.style = `
     font-family: 'Minesweeper';

@@ -1,7 +1,11 @@
 const mineGenerator = document.getElementById("mine-generator");
 const mineSolver = document.getElementById("mine-solver");
 const codeEditor = document.getElementById("code-editor-box");
-
+const advBtn = document.getElementById("advanced-mode");
+const advDiv = document.getElementById("code-editor");
+advBtn.onclick = () =>{
+    advDiv.classList.toggle("hidden");
+}
 let GENERATOR_CODE = ` 
     // return true if you need to place bomb there
     // else return false
@@ -10,9 +14,20 @@ let GENERATOR_CODE = `
     {return false};
     return Math.random()<0.2 ?  true : false;
     `;
-
-let SOLVER_CODE = "";
+let SOLVER_CODE = `
+    // just return a ${SIZE}X${SIZE} Matrix with true or false
+    // Here true represents we need to dig there and false means no digging i.e there is bomb
+    let matrix = [];
+    for (let i =0; i< ${SIZE} ; i++){
+        let newArr = Array(${SIZE}).fill(false);
+        matrix.push(newArr);
+    }
+    matrix[0][2] = true;
+    return matrix;
+`;
+codeEditor.innerText = SOLVER_CODE;
 let customBombGenerator = new Function("row", "col", GENERATOR_CODE);
+let customSolver = new Function(SOLVER_CODE);
 
 
 let STATE = 0;
@@ -55,10 +70,27 @@ codeEditor.addEventListener("input", (e) => {
 const executeButton  = document.getElementById("execute-button");
 executeButton.onclick = () =>{
     if (STATE == 0){
-        // Here Solver Code Execution
+        customSolver = new Function(SOLVER_CODE);
+        solve();
     }
     else if (STATE==1){
         customBombGenerator = new Function("row", "col", GENERATOR_CODE);
         generateBombs();
+    }
+}
+
+async function solve(){
+    let matrix = customSolver();
+    for (let i = 0;i < SIZE; i++){
+        for (let j = 0; j< SIZE; j++){ 
+            // very very easy peasy
+            // if true then just click on it!
+            if (matrix[i][j]==true){
+                const dabba = document.getElementsByClassName(`dabba-(${i},${j})`)[0];
+                if (!dabba) return;
+                onDabbaLeftClick(dabba);
+                await new Promise((resolve)=>setTimeout(resolve,100));
+            }
+        }
     }
 }
