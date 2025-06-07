@@ -4,7 +4,7 @@ const SIZE = 14; // Number of rows and cols
 const COLORS = [
   "green",
   "red",
-  "blue",
+  "violet",
   "purple",
   "pink",
   "orange",
@@ -25,7 +25,7 @@ function PLAY_POP() {
 }
 const SOUND_OVER = new Audio(OVER_PATH);
 function PLAY_OVER(){
-    SOUND_OVER.currentTime = 0;
+    // SOUND_OVER.currentTime = 0;
     SOUND_OVER.play();
 }
 

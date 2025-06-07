@@ -88,7 +88,6 @@ async function gameOver() {
   PLAY_OVER();
   canvas.style.pointerEvents = "none";
   await revealAllBombs();
-  await new Promise((resolve) => setTimeout(resolve, 4000));
   canvas.style.pointerEvents = "auto";
   const TEXT = document.createElement("h1");
   TEXT.innerText = "GAME OVER!";
@@ -141,6 +140,7 @@ function onDabbaLeftClick(dabba, sound = true) {
     bomb.style.height = "50%";
     bomb.style.borderRadius = "100%";
     bomb.style.background = "var(--text)";
+    dabba.innerHTML= "";
     dabba.appendChild(bomb);
     dabba.className += " bombed";
     gameOver();
