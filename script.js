@@ -169,7 +169,7 @@ function onDabbaLeftClick(dabba, sound = true) {
         let newDabba = document.getElementsByClassName(
           `dabba-(${row + i},${col + j})`
         )[0];
-        if (!newDabba) return;
+        if (!newDabba) continue;
         onDabbaLeftClick(newDabba, (sound = false));
       }
     }
