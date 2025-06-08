@@ -15,7 +15,6 @@ function generateBombs() {
   for (let i = 0; i < SIZE; i++) {
     for (let j = 0; j < SIZE; j++) {
       if (customBombGenerator(i, j)) {
-        console.log("Setting ", i, ",", j, " as Bomb");
         bombs.set(`${i},${j}`, true);
       }
       // ELSE NO BOMBS
@@ -26,6 +25,7 @@ function generateBombs() {
 
 // GAME BOARD HTML SETUP
 function createBoard() {
+  console.log("Creating Board");
   canvas.innerHTML = "";
   const fragment = document.createDocumentFragment();
   for (let i = 0; i < SIZE; i++) {
@@ -63,7 +63,6 @@ function createBoard() {
 }
 generateBombs();
 
-createBoard();
 function dabbaValue(row, col) {
   let val = 0;
   for (let i = -1; i <= 1; i++) {
@@ -107,11 +106,8 @@ async function gameOver() {
   const retryBtn = document.createElement("a");
   retryBtn.innerText = "Retry";
   retryBtn.onclick = () => {
-    createBoard();
+    generateBombs();
   };
-  document.addEventListener("keydown", () => {
-    createBoard();
-  });
   retryBtn.style = `
     font-family: 'Minesweeper';
     font-size: 10px;
@@ -122,14 +118,14 @@ async function gameOver() {
     text-align: center;
     color:var(--text)`;
   canvas.append(retryBtn);
-  const p = document.createElement("p");
-  p.innerText = "[Press Any Key to Restart]";
-  p.style = `
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 12px;
-    text-align: center;
-    color:var(--text)`;
-  canvas.append(p);
+  // const p = document.createElement("p");
+  // p.innerText = "[Press Any Key to Restart]";
+  // p.style = `
+  //   font-family: 'Courier New', Courier, monospace;
+  //   font-size: 12px;
+  //   text-align: center;
+  //   color:var(--text)`;
+  // canvas.append(p);
 }
 
 function onDabbaLeftClick(dabba, sound = true) {
